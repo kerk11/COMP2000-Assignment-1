@@ -14,4 +14,7 @@ public class Vegetation extends Panel {
         this.y = y;
     }
 
+    public int getFoodValue() {
+        return 10;
+    }
 }
