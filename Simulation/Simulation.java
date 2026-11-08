@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Simulation {
+    
+    private static int tickCount = 0;
+
     public static void main(String[] args) {
         JFrame f = new JFrame("Ecosystem Simulation");
         f.setSize(800, 600);
@@ -44,6 +47,13 @@ public class Simulation {
                     
                     g.growVegetation();
                     f.repaint();
+
+                    tickCount++;
+                    
+                    if (tickCount % 100 == 0) {
+                        g.printEcosystemDashboard();
+                    }
+                    
                 } catch (Exception ex) {
                     System.out.println("Warning: Collection modified during iteration.");
                 }

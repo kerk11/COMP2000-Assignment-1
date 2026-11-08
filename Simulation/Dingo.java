@@ -16,20 +16,24 @@ public class Dingo extends Animal {
         breed(g);
 
         if (energy > 0) {
-            energy -= 35;
+            energy -= 2; 
         }
+        
         if (energy <= 0) {
             g.death(this);
             System.out.println("Dingo died of exhaustion");
         }
+        
         if (age > maxAge) {
             g.death(this);
             System.out.println("Dingo died of old age");
         }
+        
         if (hunger <= 0) {
             g.death(this);
             System.out.println("Dingo died of hunger");
         }
+        
         if (hunger < maxHunger) {
             hunt(g);
         }

@@ -1,6 +1,9 @@
 package Simulation;
 
 import java.awt.*;
+import java.util.DoubleSummaryStatistics;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class grid {
 
@@ -73,5 +76,38 @@ public class grid {
 
             VegetationTimer = 0;
         }
+    }
+
+    public void printEcosystemDashboard() {
+        
+        new Thread(() -> {
+            System.out.println("\n=== Live Ecological Dashboard  ===");
+
+            synchronized (animals) {
+                try {
+                    Map<Class<?>, Long> populationBySpecies = animals.stream().parallel()
+                        .collect(Collectors.groupingBy(Animal::getClass, Collectors.counting()));
+
+                    Map<Class<?>, DoubleSummaryStatistics> energyStatsBySpecies = animals.stream().parallel()
+                        .collect(Collectors.groupingBy(Animal::getClass, 
+                                 Collectors.summarizingDouble(Animal::getEnergy)));
+
+                    populationBySpecies.forEach((species, count) -> {
+                        System.out.println("Species: " + species.getSimpleName());
+                        System.out.println(" - Population : " + count + " alive");
+                        
+                        DoubleSummaryStatistics stats = energyStatsBySpecies.get(species);
+                        if (stats != null && count > 0) {
+                            System.out.printf(" - Energy Stats: Avg %.1f | Min %.1f | Max %.1f\n", 
+                                              stats.getAverage(), stats.getMin(), stats.getMax());
+                        }
+                    });
+                } catch (Exception e) {
+                    System.out.println("ConcurrentModificationException caught and handled!");
+                }
+            }
+            System.out.println("============================================\n");
+            
+        }).start();
     }
 }

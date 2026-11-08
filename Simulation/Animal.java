@@ -128,4 +128,7 @@ public class Animal extends Panel {
             moveY *= -1;
         }
     }
+    public double getEnergy() {
+        return this.energy;
+    }
 }

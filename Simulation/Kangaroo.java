@@ -17,19 +17,24 @@ public class Kangaroo extends Animal {
         breed(a);
 
         if (energy > 0) {
-            energy -= 10;
+            energy -= 1; 
         }
+        
         if (energy <= 0) {
             a.death(this);
             System.out.println("Kangaroo died of exhaustion");
         }
+        
         if (age > maxAge) {
             a.death(this);
             System.out.println("Kangaroo died of old age");
         }
+        
         if (hunger <= 0) {
+            a.death(this); 
             System.out.println("Kangaroo died of hunger");
         }
+        
         if (hunger < maxHunger) {
             forage(a);
         }
